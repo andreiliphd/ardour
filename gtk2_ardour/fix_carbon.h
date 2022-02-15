@@ -28,7 +28,7 @@
 #ifdef CARBON_FLAT_HEADERS
 #include "MacTypes.h"
 #else
-#include "/System/Library/Frameworks/CoreServices.framework/Headers/../Frameworks/CarbonCore.framework/Headers/MacTypes.h"
+#include "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include/MacTypes.h"
 #endif
 #undef Style
 #undef Fixed

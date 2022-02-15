@@ -22,7 +22,7 @@
 #include <getopt.h>
 #include <iostream>
 #include <string>
-
+#include <string.h>
 #ifdef PLATFORM_WINDOWS
 #include <windows.h>
 #else

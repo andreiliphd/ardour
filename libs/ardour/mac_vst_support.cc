@@ -114,7 +114,7 @@ mac_vst_load (const char *path)
 		return 0;
 	}
 
-	fhandle->name = strdup (path);
+	fhandle->name = g_strdup (path);
 
 	fhandle->main_entry = (main_entry_t)
 		CFBundleGetFunctionPointerForName (fhandle->bundleRef, CFSTR("main_macho"));

@@ -354,9 +354,9 @@ def set_compiler_flags (conf,opt):
     build_host_supports_sse = False
 
     # Flags necessary for building
-    compiler_flags = []     # generic
-    c_flags = []            # C-specific
-    cxx_flags = []          # C++-specific
+    compiler_flags = ['-isysroot/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/', '-F/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/System/Library/Frameworks/']
+    c_flags = ['-std=c11', '-D_POSIX_C_SOURCE=200809L', '-D_DARWIN_C_SOURCE', '-D_GNU_SOURCE', '-D_XOPEN_SOURCE=600']            # C-specific
+    cxx_flags = ['-std=c++11']          # C++-specific
     linker_flags = []
 
     # Optimization flags (overridable)
@@ -512,7 +512,7 @@ int main() { return 0; }''',
     if opt.use_libcpp or conf.env['build_host'] in [ 'yosemite', 'el_capitan', 'sierra', 'high_sierra', 'mojave', 'catalina' ]:
        cxx_flags.append('--stdlib=libc++')
        linker_flags.append('--stdlib=libc++')
-
+    cxx_flags.append('-std=c++11')
     if conf.options.cxx11 or conf.env['build_host'] in [ 'mavericks', 'yosemite', 'el_capitan', 'sierra', 'high_sierra', 'mojave', 'catalina' , 'bigsur' ]:
         conf.check_cxx(cxxflags=["-std=c++11"])
         cxx_flags.append('-std=c++11')
@@ -548,7 +548,7 @@ int main() { return 0; }''',
 
 
         if not (opt.arm64 or conf.env['build_target'] == 'armhf' and conf.env['build_target'] == 'aarch64'):
-           compiler_flags.append ("-DARCH_X86")
+           compiler_flags.append ("-arch_only apple-m1")
 
         if platform == 'linux' and conf.env['build_target'] != 'armhf' and conf.env['build_target'] != 'aarch64':
 
@@ -741,7 +741,6 @@ int main() { return 0; }''',
     cxx_flags.extend(
         ('-D__STDC_LIMIT_MACROS', '-D__STDC_FORMAT_MACROS',
          '-DCANVAS_COMPATIBILITY', '-DCANVAS_DEBUG'))
-
     # Do not use Boost.System library
     cxx_flags.append('-DBOOST_ERROR_CODE_HEADER_ONLY')
 
@@ -1388,9 +1387,9 @@ int main () { return 0; }
     set_compiler_flags (conf, Options.options)
 
     if conf.env['build_host'] not in [ 'mojave', 'catalina', 'bigsur']:
-        conf.env.append_value('CXXFLAGS_OSX', '-F/System/Library/Frameworks')
+        conf.env.append_value('CXXFLAGS_OSX', '-F/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk')
 
-    conf.env.append_value('CXXFLAGS_OSX', '-F/Library/Frameworks')
+    conf.env.append_value('CXXFLAGS_OSX', '-F/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/System/Library/Frameworks')
 
     if sys.platform == 'darwin':
         sub_config_and_use(conf, 'libs/appleutility')
